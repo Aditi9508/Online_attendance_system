@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Attendance Management</title>
+    
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#10B981', // emerald-600
+                        primaryDark: '#059669', // emerald-700
+                        darkBg: '#0f172a', // slate-900
+                        darkCard: '#1e293b', // slate-800
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Feather Icons for modern minimalist icons -->
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-[#f8fafc] text-[#011d15] dark:bg-darkBg dark:text-emerald-100 transition-colors duration-300 antialiased overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/80 backdrop-blur-md border-b border-emerald-100" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer">
+                    <div class="w-10 h-10 bg-gradient-to-br from-[#10B981] to-[#059669] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg shadow-emerald-500/30">
+                        L
+                    </div>
+                    <span class="font-bold text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-[#064e3b] to-[#10B981]">LogMyClass</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-sm font-medium hover:text-[#10B981] transition-colors">Home</a>
+                    <a href="#features" class="text-sm font-medium hover:text-[#10B981] transition-colors">Features</a>
+                    <a href="#how-it-works" class="text-sm font-medium hover:text-[#10B981] transition-colors">How It Works</a>
+                    <a href="#use-cases" class="text-sm font-medium hover:text-[#10B981] transition-colors">Use Cases</a>
+                    <a href="#faq" class="text-sm font-medium hover:text-[#10B981] transition-colors">FAQs</a>
+                    <a href="#contact" class="text-sm font-medium hover:text-[#10B981] transition-colors">Contact</a>
+                </div>
+
+                <!-- Actions -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <button id="theme-toggle" class="p-2.5 rounded-xl text-slate-800 hover:text-primary hover:bg-emerald-50 dark:text-slate-400 dark:hover:bg-slate-800 transition-all outline-none">
+                        <i id="theme-icon" data-feather="moon"></i>
+                    </button>
+                    <a href="#" class="text-sm font-medium hover:text-[#10B981] transition-colors open-login-modal dark:text-slate-300">Login</a>
+                    <a href="#" class="px-5 py-2.5 text-sm font-medium text-white bg-gradient-to-r from-[#10B981] to-[#059669] hover:opacity-90 rounded-full shadow-lg shadow-emerald-500/30 transition-all hover:-translate-y-0.5 open-signup-modal">Sign Up</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center gap-4">
+                    <button id="theme-toggle-mobile" class="p-2 rounded-lg text-slate-800 dark:text-slate-400">
+                        <i id="theme-icon-mobile" data-feather="moon"></i>
+                    </button>
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg text-slate-800 hover:text-primary focus:outline-none">
+                        <i data-feather="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-lg border-b border-emerald-100 absolute w-full transition-all">
+            <div class="px-4 py-6 space-y-4">
+                <a href="#home" class="block text-base font-medium hover:text-primary">Home</a>
+                <a href="#features" class="block text-base font-medium hover:text-primary">Features</a>
+                <a href="#how-it-works" class="block text-base font-medium hover:text-primary">How It Works</a>
+                <a href="#use-cases" class="block text-base font-medium hover:text-primary">Use Cases</a>
+                <a href="#faq" class="block text-base font-medium hover:text-primary">FAQs</a>
+                <a href="#contact" class="block text-base font-medium hover:text-primary">Contact</a>
+                <div class="border-t border-slate-200 pt-4 flex flex-col space-y-3">
+                    <a href="#" class="block text-center text-base font-medium border border-slate-300 rounded-lg py-2 open-login-modal">Login</a>
+                    <a href="#" class="block text-center text-base font-medium text-white bg-primary rounded-lg py-2 open-signup-modal">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+      <section id="home" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden"> 
+        <!-- Background decorative blobs -->
+         <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl blob-anim"></div>
+            <div class="absolute top-40 -left-20 w-80 h-80 bg-primary/20 rounded-full blur-3xl blob-anim-delayed"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex flex-col items-center justify-center text-center slide-up-anim py-10 lg:py-20"> 
+                <!-- Text Content -->
+                <div class="max-w-4xl mx-auto">
+                    <div class="inline-block px-4 py-1.5 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-primary dark:text-emerald-300 text-sm font-semibold mb-8 shadow-sm border border-emerald-200 dark:border-emerald-800/50">
+                        🚀 The Future of Classroom Management
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-extrabold tracking-tight leading-[1.1] mb-8">
+                        Smart QR Based <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-emerald-600">Attendance Records</span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-slate-800 dark:text-slate-400 mb-12 max-w-2xl mx-auto">
+                        Empower teachers and students with a fast, secure, and smart digital attendance system. No more manual roll calls—just scan and log.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center gap-5">
+                        <button class="w-full sm:w-auto px-10 py-4 text-lg font-bold text-white bg-primary hover:bg-primaryDark rounded-full shadow-2xl shadow-primary/30 transition-all hover:scale-105 btn-gradient open-signup-modal">
+                            Start Your Free Class
+                        </button>
+                        <button class="w-full sm:w-auto px-10 py-4 text-lg font-bold text-slate-800 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-primary dark:hover:border-emerald-500 rounded-full shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2">
+                            <i data-feather="play-circle" class="w-6 h-6"></i> Learn More
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section id="features" class="py-20 bg-white dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 px-4">
+                <h2 class="text-primary dark:text-emerald-400 font-semibold tracking-wide uppercase text-sm mb-3">Our Features</h2>
+                <h3 class="text-3xl md:text-4xl font-bold mb-4">Everything you need to manage attendance</h3>
+                <p class="text-slate-800 dark:text-slate-400">A comprehensive suite of tools designed to make attendance tracking effortless for educational institutions.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
+                        <i data-feather="mouse-pointer" class="text-primary group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">One Click Attendance</h4>
+                    <p class="text-slate-800 dark:text-slate-400 text-sm leading-relaxed">Mark attendance for an entire class instantly with automated defaults or QR code scanning.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card group">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-purple-500 transition-all duration-300">
+                        <i data-feather="users" class="text-purple-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Student Dashboard</h4>
+                    <p class="text-slate-800 dark:text-slate-400 text-sm leading-relaxed">Students can track their own attendance records, view shortage alerts, and submit leave requests.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card group">
+                    <div class="w-14 h-14 rounded-2xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-blue-500 transition-all duration-300">
+                        <i data-feather="briefcase" class="text-blue-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Teacher Panel</h4>
+                    <p class="text-slate-800 dark:text-slate-400 text-sm leading-relaxed">Dedicated interface for educators to manage classes, add subjects, and export attendance sheets.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card group">
+                    <div class="w-14 h-14 rounded-2xl bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-orange-500 transition-all duration-300">
+                        <i data-feather="pie-chart" class="text-orange-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Attendance Reports</h4>
+                    <p class="text-slate-800 dark:text-slate-400 text-sm leading-relaxed">Generate detailed analytical reports in PDF or Excel formats with beautiful visual charts.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card group">
+                    <div class="w-14 h-14 rounded-2xl bg-green-50 dark:bg-green-900/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-green-500 transition-all duration-300">
+                        <i data-feather="shield" class="text-green-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Secure Login System</h4>
+                    <p class="text-slate-800 dark:text-slate-400 text-sm leading-relaxed">Role-based access control with robust security to ensure data privacy and prevent proxy attendance.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card group">
+                    <div class="w-14 h-14 rounded-2xl bg-pink-50 dark:bg-pink-900/30 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-pink-500 transition-all duration-300">
+                        <i data-feather="activity" class="text-pink-500 group-hover:text-white transition-colors"></i>
+                    </div>
+                    <h4 class="text-xl font-bold mb-3">Real-time Data</h4>
+                    <p class="text-slate-800 dark:text-slate-400 text-sm leading-relaxed">Instantly syncs data across all devices. Admins can monitor live attendance across the institution.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-24 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-primary dark:text-emerald-400 font-semibold tracking-wide uppercase text-sm mb-3">Process</h2>
+                <h3 class="text-3xl md:text-4xl font-bold mb-4">How it works</h3>
+                <p class="text-slate-800 dark:text-slate-400">Get up and running in minutes with our intuitive 4-step setup process.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Connecting Line -->
+                <div class="hidden md:block absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-emerald-200 via-purple-200 to-emerald-200 dark:from-emerald-900 dark:via-purple-900 dark:to-emerald-900 -translate-y-1/2 z-0"></div>
+                
+                <div class="grid md:grid-cols-4 gap-8 relative z-10">
+                    <!-- Step 1 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-emerald-100 dark:border-emerald-900 shadow-xl flex items-center justify-center text-xl font-bold text-primary mb-6 transition-transform hover:scale-110">1</div>
+                        <h4 class="text-lg font-bold mb-2">Create Account</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 px-4">Sign up as an Admin, Teacher, or Student in seconds securely.</p>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-emerald-100 dark:border-emerald-900 shadow-xl flex items-center justify-center text-xl font-bold text-primary mb-6 transition-transform hover:scale-110">2</div>
+                        <h4 class="text-lg font-bold mb-2">Add Classes</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 px-4">Import students via CSV and set up subjects & schedules.</p>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-emerald-100 dark:border-emerald-900 shadow-xl flex items-center justify-center text-xl font-bold text-primary mb-6 transition-transform hover:scale-110">3</div>
+                        <h4 class="text-lg font-bold mb-2">Mark Attendance</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 px-4">Use QR code, bulk update, or standard roll call.</p>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-white dark:bg-slate-800 border-4 border-emerald-100 dark:border-emerald-900 shadow-xl flex items-center justify-center text-xl font-bold text-primary mb-6 transition-transform hover:scale-110">4</div>
+                        <h4 class="text-lg font-bold mb-2">Generate Reports</h4>
+                        <p class="text-sm text-slate-500 dark:text-slate-400 px-4">Instantly download analytical reports and monitor trends.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section id="use-cases" class="py-20 bg-white dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <h2 class="text-primary dark:text-emerald-400 font-semibold tracking-wide uppercase text-sm mb-3">Versatility</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6">Attendance System for Every Learning Environment</h3>
+                    <p class="text-slate-800 dark:text-slate-400 mb-8">Smart Attendance System helps schools, colleges, and coaching Centers manage attendance quickly and easily.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition">
+                            <div class="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-900/40 flex items-center justify-center flex-shrink-0">
+                                <i data-feather="book-open" class="text-orange-500"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1">Schools</h5>
+                                <p class="text-sm text-slate-500">Simplify daily homeroom and class-wise attendance for K-12.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition">
+                            <div class="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center flex-shrink-0">
+                                <i data-feather="award" class="text-blue-500"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1">Colleges & Universities</h5>
+                                <p class="text-sm text-slate-500">Handle complex electives, lectures, and lab sessions effortlessly.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition">
+                            <div class="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center flex-shrink-0">
+                                <i data-feather="target" class="text-green-500"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1">Coaching Centers</h5>
+                                <p class="text-sm text-slate-500">Track batch-wise attendance and notify parents automatically.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-4 p-4 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent hover:border-slate-100 dark:hover:border-slate-700 transition">
+                            <div class="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-900/40 flex items-center justify-center flex-shrink-0">
+                                <i data-feather="monitor" class="text-purple-500"></i>
+                            </div>
+                            <div>
+                                <h5 class="font-bold text-lg mb-1">Online Classes</h5>
+                                <p class="text-sm text-slate-500">Integrate log times and duration tracking for virtual seminars.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:w-1/2 relative">
+                    <div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative">
+                        <!-- Placeholder for Illustration/Image -->
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Students in class" class="object-cover w-full h-full opacity-90 hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent flex items-end p-8">
+                            <div class="glass-nav p-4 rounded-xl border border-white/20 backdrop-blur-md text-white w-full">
+                                <div class="flex items-center justify-between mb-2">
+                                    <span class="text-sm font-semibold text-emerald-200">Today's Overview</span>
+                                    <span class="text-xs bg-white/20 px-2 py-1 rounded">Live</span>
+                                </div>
+                                <div class="flex justify-between items-end">
+                                    <div>
+                                        <div class="text-3xl font-bold">1,204</div>
+                                        <div class="text-xs text-slate-300">Students Present</div>
+                                    </div>
+                                    <div class="w-24 h-12 bg-white/10 rounded-lg relative overflow-hidden flex items-end p-1 gap-1">
+                                        <div class="w-1/4 bg-blue-400 rounded-sm h-[40%]"></div>
+                                        <div class="w-1/4 bg-blue-400 rounded-sm h-[60%]"></div>
+                                        <div class="w-1/4 bg-blue-400 rounded-sm h-[80%]"></div>
+                                        <div class="w-1/4 bg-emerald-500 rounded-sm h-[95%] shadow-[0_0_10px_#6366f1]"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Decorative element -->
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-dots dark:bg-dots-dark rounded-xl z-[-1]"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-24">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-primary dark:text-emerald-400 font-semibold tracking-wide uppercase text-sm mb-3">Support</h2>
+                <h3 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h3>
+                <p class="text-slate-800 dark:text-slate-400">Everything you need to know about setting up and using LogMyClass.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-lg">How does LogMyClass work?</span>
+                        <i data-feather="chevron-down" class="text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-5 text-slate-800 dark:text-slate-400 hidden">
+                        LogMyClass provides a digital platform where admins can set up classes, teachers can mark attendance via web or mobile apps (including QR scanning), and students can view their real-time attendance status. All data is securely stored in the cloud.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-lg">Can students check their attendance?</span>
+                        <i data-feather="chevron-down" class="text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-5 text-slate-800 dark:text-slate-400 hidden">
+                        Yes! Students have their own personalized dashboard where they can track their daily attendance, view their overall percentages per subject, and receive alerts if they fall below the required attendance criteria.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-lg">Is the system secure?</span>
+                        <i data-feather="chevron-down" class="text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-5 text-slate-800 dark:text-slate-400 hidden">
+                        Absolutely. We use industry-standard encryption for data storage and transmission. Access is strictly role-based, ensuring that students cannot modify records and teachers can only manage their assigned classes.
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 overflow-hidden transition-all duration-300">
+                    <button class="faq-button w-full px-6 py-5 text-left flex justify-between items-center focus:outline-none">
+                        <span class="font-semibold text-lg">Can teachers download attendance reports?</span>
+                        <i data-feather="chevron-down" class="text-slate-400 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-5 text-slate-800 dark:text-slate-400 hidden">
+                        Yes, teachers and administrators can easily export detailed attendance reports in formats like CSV, Excel, or PDF. Reports can be filtered by date range, subject, student, or specific classes.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 bg-white dark:bg-slate-800/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row gap-16">
+                <!-- Contact Info -->
+                <div class="lg:w-1/3">
+                    <h2 class="text-primary dark:text-emerald-400 font-semibold tracking-wide uppercase text-sm mb-3">Get In Touch</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold mb-6">Have questions? We're here to help.</h3>
+                    <p class="text-slate-800 dark:text-slate-400 mb-10">Our team is available 24/7 to help you set up and optimize your attendance management system.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-primary">
+                                <i data-feather="mail"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-500">Email Us</p>
+                                <p class="font-semibold text-slate-800 dark:text-white">logmyclassproject@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center text-primary">
+                                <i data-feather="map-pin"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-slate-500">Project Location</p>
+                                <p class="font-semibold text-slate-800 dark:text-white">BCA Final Year Project </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="lg:w-2/3">
+                    <div class="bg-emerald-50/50 dark:bg-darkCard p-8 md:p-10 rounded-3xl border border-emerald-100 dark:border-slate-700 shadow-sm">
+                        <form action="#" class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold ml-1">Full Name</label>
+                                <input type="text" placeholder="John Doe" class="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-semibold ml-1">Email Address</label>
+                                <input type="email" placeholder="john@example.com" class="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                            </div>
+                            <div class="md:col-span-2 space-y-2">
+                                <label class="text-sm font-semibold ml-1">Subject</label>
+                                <input type="text" placeholder="How can we help?" class="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all">
+                            </div>
+                            <div class="md:col-span-2 space-y-2">
+                                <label class="text-sm font-semibold ml-1">Message</label>
+                                <textarea rows="4" placeholder="Tell us more about your institution..." class="w-full px-5 py-3 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all"></textarea>
+                            </div>
+                            <div class="md:col-span-2">
+                                <button type="submit" class="w-full md:w-auto px-10 py-4 font-bold text-white bg-primary hover:bg-primaryDark rounded-xl shadow-lg shadow-primary/30 transition-all hover:-translate-y-1">
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary to-purple-800 dark:from-emerald-900 dark:to-purple-900 opacity-95"></div>
+        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay opacity-30"></div>
+        
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">Ready to simplify your attendance?</h2>
+            <p class="text-emerald-100 text-lg md:text-xl mb-10 max-w-2xl mx-auto">Help teachers and students manage attendance easily. Setup takes less than 5 minutes.</p>
+            
+            <a href="#" class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-primary bg-white rounded-full shadow-2xl hover:bg-emerald-50 hover:scale-105 transition-all duration-300">
+                Start Managing Attendance Today
+                <i data-feather="arrow-right" class="ml-2 w-5 h-5"></i>
+            </a>
+            <p class="mt-6 text-sm text-emerald-200">simple • fast • secure attendance management</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-darkCard border-t border-slate-200 dark:border-slate-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Brand -->
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-2 mb-6">
+                        <div class="w-8 h-8 bg-gradient-to-br from-primary to-purple-600 rounded-lg flex items-center justify-center text-white font-bold text-lg">
+                            L
+                        </div>
+                        <span class="font-bold text-xl tracking-tight text-slate-800 dark:text-white">LogMyClass</span>
+                    </div>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm mb-6 leading-relaxed">
+                        The modern, secure, and intuitive way to manage attendance for educational institutions worldwide.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="mailto:logmyclassproject@gmail.com" class="text-slate-400 hover:text-primary transition-colors"><i data-feather="mail" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-primary transition-colors"><i data-feather="facebook" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-primary transition-colors"><i data-feather="instagram" class="w-5 h-5"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-primary transition-colors"><i data-feather="linkedin" class="w-5 h-5"></i></a>
+                    </div>
+                </div>
+
+                <!-- Links 1 -->
+                <div>
+                    <h4 class="font-semibold text-slate-800 dark:text-white mb-6">Product</h4>
+                    <ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">Features</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Integrations</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Changelog</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links 2 -->
+                <div>
+                    <h4 class="font-semibold text-slate-800 dark:text-white mb-6">Resources</h4>
+                    <ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+                        <li><a href="#" class="hover:text-primary transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">API Documentation</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-primary transition-colors">Community</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h4 class="font-semibold text-slate-800 dark:text-white mb-6">Contact Us</h4>
+                    <ul class="space-y-4 text-sm text-slate-500 dark:text-slate-400">
+                        <li class="flex items-center gap-3"><i data-feather="mail" class="w-4 h-4"></i> logmyclassproject@gmail.com</li>
+                        <li class="flex items-start gap-3"><i data-feather="map-pin" class="w-4 h-4 mt-1 flex-shrink-0"></i> BCA -Final Year Project</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-200 dark:border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-slate-500 dark:text-slate-500">
+                    &copy; <span id="year"></span> LogMyClass. All rights reserved.
+                </p>
+                <div class="flex space-x-6 text-sm text-slate-500 dark:text-slate-500">
+                    <a href="#" class="hover:text-primary transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-primary transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Auth Modals -->
+    <!-- Signup Modal -->
+    <div id="signup-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative animate-up">
+            <button class="absolute top-6 right-6 text-slate-400 hover:text-slate-800 close-modal" data-modal="signup-modal">
+                <i data-feather="x"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-2">Create Account</h3>
+            <p class="text-slate-500 mb-6 font-medium">Join thousands of students and teachers.</p>
+            <form id="signup-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Full Name</label>
+                    <input type="text" placeholder="Aditi Rajani" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Email</label>
+                    <input type="email" placeholder="aditi@example.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" required>
+                </div>
+                <button type="submit" class="w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-primaryDark transition-all mt-4">Create Account</button>
+                <p class="text-center text-sm text-slate-500 mt-4">Already have an account? <a href="#" class="text-primary font-bold hover:underline" id="open-login-from-signup">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div class="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl relative animate-up">
+            <button class="absolute top-6 right-6 text-slate-400 hover:text-slate-800 close-modal" data-modal="login-modal">
+                <i data-feather="x"></i>
+            </button>
+            <h3 class="text-2xl font-bold mb-2">Welcome Back</h3>
+            <p class="text-slate-500 mb-6 font-medium">Log in to your account to continue.</p>
+            <form id="login-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Email</label>
+                    <input type="email" placeholder="admin@logmyclass.com" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" required>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1">Password</label>
+                    <input type="password" placeholder="••••••••" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 outline-none transition-all" required>
+                </div>
+                <div class="flex justify-between items-center text-sm">
+                    <label class="flex items-center gap-2 cursor-pointer">
+                        <input type="checkbox" class="accent-primary"> Remember me
+                    </label>
+                    <a href="#" class="text-primary font-medium">Forgot Password?</a>
+                </div>
+                <button type="submit" class="w-full py-3 bg-primary text-white font-bold rounded-xl hover:bg-primaryDark transition-all mt-4">Log In</button>
+                <p class="text-center text-sm text-slate-500 mt-4">Don't have an account? <a href="#" class="text-primary font-bold hover:underline" id="open-signup-from-login">Create Account</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+/* Custom Styling for LogMyClass Landing Page */
+
+/* Base Styles */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Glassmorphism Classes */
+.glass-nav {
+    background: rgba(248, 250, 252, 0.85); /* slate-50 */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-nav-dark {
+    background: rgba(2, 37, 24, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Feature Cards */
+.feature-card {
+    @apply p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm hover:shadow-xl transition-all duration-300;
+    transform: translateY(0);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(14, 157, 61, 0.3);
+}
+
+/* Gradient Button */
+.btn-gradient {
+    background-size: 200% auto;
+    background-image: linear-gradient(to right, #10B981 0%, #059669 51%, #10B981 100%);
+    transition: 0.5s;
+}
+
+.btn-gradient:hover {
+    background-position: right center;
+}
+
+/* Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes float-reverse {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(15px); }
+    100% { transform: translateY(0px); }
+}
+
+.floating-slow {
+    animation: float 6s ease-in-out infinite;
+}
+
+.floating-slow-reverse {
+    animation: float-reverse 7s ease-in-out infinite;
+}
+
+.floating-fast {
+    animation: float 4s ease-in-out infinite;
+}
+
+@keyframes blob {
+    0% { transform: translate(0px, 0px) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+    100% { transform: translate(0px, 0px) scale(1); }
+}
+
+.blob-anim {
+    animation: blob 10s infinite alternate;
+}
+
+.blob-anim-delayed {
+    animation: blob 12s infinite alternate;
+    animation-delay: 2s;
+}
+
+@keyframes pulse-slow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: .7; }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Scroll reveal animations */
+.slide-up-anim {
+    opacity: 0;
+    animation: slideUp 0.8s ease-out forwards;
+}
+
+.fade-in-anim {
+    opacity: 0;
+    animation: fadeIn 1.2s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Decorative Background Patterns */
+.bg-dots {
+    background-image: radial-gradient(#10B981 2px, transparent 2px);
+    background-size: 16px 16px;
+}
+
+.bg-dots-dark {
+    background-image: radial-gradient(#334155 2px, transparent 2px);
+    background-size: 16px 16px;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+.dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #6EE7B7; /* emerald-300 */
+    border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #10B981; /* emerald-500 */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #475569;
+}

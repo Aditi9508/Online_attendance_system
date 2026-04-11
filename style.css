@@ -7,7 +7,7 @@ html {
 
 /* Glassmorphism Classes */
 .glass-nav {
-    background: rgba(248, 250, 252, 0.85); /* slate-50 */
+    background: rgba(216, 219, 222, 0.85); /* slate-50 */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
 }
